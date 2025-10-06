@@ -5,7 +5,7 @@ import { EventhubComponent } from './eventhub/eventhub.component';
 @Component({
   selector: 'app-root',
   standalone: true,
-  imports: [RouterOutlet, EventhubComponent],
+  imports: [EventhubComponent],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
   template: '<router-outlet></router-outlet>'

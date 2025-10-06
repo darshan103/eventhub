@@ -1,5 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
+import { EventhubService } from '../eventservices/eventhub.service';
 
 @Component({
   selector: 'app-eventhub',
@@ -30,13 +31,22 @@ export class EventhubComponent {
     },
   ];
 
+  backendEvents: any[] = [];
+
   currentIndex = 0;
   currentYear = new Date().getFullYear();
 
-  constructor() {
+  constructor(private eventService: EventhubService) {
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.events.length;
     }, 4000);
+  }
+
+  ngOnInit(): void {
+    this.eventService.getEvents().subscribe(res => {
+      this.backendEvents = res.data;
+      console.log("my events are...", this.backendEvents);
+    });
   }
 
 }
