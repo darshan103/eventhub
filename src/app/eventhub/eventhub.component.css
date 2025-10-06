@@ -1,0 +1,65 @@
+/* hero-section.component.css */
+section {
+    animation: fadeIn 0.8s ease-in-out both;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(10px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+@keyframes fadeInUp {
+    0% {
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    100% {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-fadeIn {
+    animation: fadeInUp 1s ease-out forwards;
+}
+
+@keyframes bgZoom {
+    0% {
+        transform: scale(1);
+        opacity: 0;
+    }
+
+    100% {
+        transform: scale(1.1);
+        opacity: 1;
+    }
+}
+
+.animate-bgZoom {
+    animation: bgZoom 10s ease-in-out forwards;
+}
+
+/* Text fade-in & upward motion */
+@keyframes fadeInUp {
+    from {
+        opacity: 0;
+        transform: translateY(40px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+.animate-[fadeInUp_1s_ease-out_forwards] {
+    animation: fadeInUp 1s ease-out forwards;
+}
