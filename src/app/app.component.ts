@@ -7,7 +7,8 @@ import { EventhubComponent } from './eventhub/eventhub.component';
   standalone: true,
   imports: [RouterOutlet, EventhubComponent],
   templateUrl: './app.component.html',
-  styleUrl: './app.component.css'
+  styleUrl: './app.component.css',
+  template: '<router-outlet></router-outlet>'
 })
 export class AppComponent {
   title = 'eventhub';
