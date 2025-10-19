@@ -7,28 +7,28 @@ import { Observable } from 'rxjs';
 })
 export class EventhubService {
 
-  private apiUrl = 'http://localhost:1337/api/events';
+  private apiUrl = 'http://localhost:1337/api/eventhub';
 
   constructor(private http: HttpClient) { }
 
   /**
-   * Fetch all events
+   * Fetch a hackathons
    */
-  getEvents(): Observable<any> {
-    return this.http.get<any>(this.apiUrl);
+  getHackatons(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/hackathons`);
   }
 
   /**
-   * Fetch a single event by ID
+   * Fetch a contests
    */
-  getEventById(id: string | number): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/${id}`);
+  getContests(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/contests`);
   }
 
   /**
-   * Optional: Search events by platform (e.g., Hackathon, Internship, Challenge)
+   * Fetch a internships
    */
-  // getEventsByPlatform(platform: string): Observable<any> {
-  //   return this.http.get<any>(`${this.apiUrl}?filters[platform][$eq]=${platform}`);
-  // }
+  getInternships(): Observable<any> {
+    return this.http.get<any>(`${this.apiUrl}/internships`);
+  }
 }
