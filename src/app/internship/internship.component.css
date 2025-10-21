@@ -1,4 +1,4 @@
-/* Limit long descriptions nicely */
+/* Limit long descriptions neatly */
 .line-clamp-3 {
     display: -webkit-box;
     line-clamp: 3;

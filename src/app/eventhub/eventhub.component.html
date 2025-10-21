@@ -35,14 +35,10 @@
                         <h3 class="text-xl font-bold text-gray-800 mb-2 truncate">
                             {{ event.title || 'Untitled Event' }}
                         </h3>
-                        <p class="text-gray-600 mb-4 line-clamp-3 text-sm">
-                            {{ event.description || 'No description available.' }}
+                        <p class="text-sm font-medium text-blue-600">
+                            {{ event.start_date || 'Date not specified' }}
                         </p>
                     </div>
-    
-                    <p class="text-sm font-medium text-blue-600">
-                        {{ event.date || 'Date not specified' }}
-                    </p>
                 </div>
             </div>
         </div>

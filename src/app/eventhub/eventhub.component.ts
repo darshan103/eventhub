@@ -62,8 +62,12 @@ export class EventhubComponent {
     this.eventService.getInternships().subscribe(res => {
       this.backendInternships = res.data;
       // this.events = this.backendInternships;
-      console.log("my internships are...", this.backendInternships);
+      // console.log("my internships are...", this.backendInternships);
     });
+    
+    setTimeout(() => {
+      console.log("my events are...", this.events);
+    }, 5000);
   }
 
   onImageError(event: any) {
