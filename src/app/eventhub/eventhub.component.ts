@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { EventhubService } from '../eventservices/eventhub.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-eventhub',
@@ -10,26 +11,6 @@ import { EventhubService } from '../eventservices/eventhub.service';
   styleUrl: './eventhub.component.css'
 })
 export class EventhubComponent {
-  // events = [
-  //   {
-  //     title: 'Google Cloud Hackathon 2025',
-  //     desc: 'Build innovative cloud apps and win exciting prizes.',
-  //     date: 'Oct 25–27, 2025',
-  //     image: 'https://source.unsplash.com/800x400/?hackathon,tech',
-  //   },
-  //   {
-  //     title: 'Microsoft Future Developer Challenge',
-  //     desc: 'Show your skills with AI and web technologies.',
-  //     date: 'Nov 10–15, 2025',
-  //     image: 'https://source.unsplash.com/800x400/?coding,developer',
-  //   },
-  //   {
-  //     title: 'GitHub CodeFest 2025',
-  //     desc: 'Collaborate, code, and contribute to open-source projects.',
-  //     date: 'Dec 1–3, 2025',
-  //     image: 'https://source.unsplash.com/800x400/?programming,event',
-  //   },
-  // ];
 
   events: any[] = [];
 
@@ -40,7 +21,7 @@ export class EventhubComponent {
   currentIndex = 0;
   currentYear = new Date().getFullYear();
 
-  constructor(private eventService: EventhubService) {
+  constructor(private eventService: EventhubService, private router: Router) {
     setInterval(() => {
       this.currentIndex = (this.currentIndex + 1) % this.events.length;
     }, 4000);
@@ -64,7 +45,7 @@ export class EventhubComponent {
       // this.events = this.backendInternships;
       // console.log("my internships are...", this.backendInternships);
     });
-    
+
     setTimeout(() => {
       console.log("my events are...", this.events);
     }, 5000);
@@ -72,6 +53,10 @@ export class EventhubComponent {
 
   onImageError(event: any) {
     event.target.src = '';
+  }
+
+  goToEvent(event: any) {
+    window.open(event.url, '_blank');
   }
 
 }
