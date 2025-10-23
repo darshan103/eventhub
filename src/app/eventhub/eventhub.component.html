@@ -163,20 +163,54 @@
 </section>
 
 
-<section class="relative bg-white text-center py-20 px-4 overflow-hidden">
-    <div class="max-w-3xl mx-auto animate-[fadeInUp_1s_ease-out] opacity-0 animate-fadeIn">
-        <h2 class="text-3xl md:text-5xl font-bold text-gray-800 mb-6">
-            The future is <span class="text-blue-600">human plus AI</span>
-        </h2>
-        <p class="text-lg md:text-xl text-gray-600 leading-relaxed">
-            We’ve entered a new era of software development where humans and AI build together.
-            This changes the skills you need as a developer, and the way companies engage, hire, and upskill technical
-            talent.
-            In short, this changes everything.
-            We’re embracing these changes with you, and we’ve reinvented our products to meet the moment.
-        </p>
+<!-- Customer Feedback Carousel -->
+<section class="bg-gray-50 py-16 px-4">
+    <h3 class="text-3xl font-bold text-gray-800 text-center mb-12">
+        What Our Customers Say
+    </h3>
+
+    <div class="relative max-w-3xl mx-auto">
+        <!-- Carousel Wrapper -->
+        <div *ngFor="let feedback of feedbacks; let i = index" [class.hidden]="i !== currentFeedbackIndex"
+            class="transition-all duration-700 ease-in-out text-center bg-white shadow-lg rounded-2xl p-8 mx-4 md:mx-0 animate-fadeIn">
+
+            <p class="text-gray-600 italic text-lg mb-6">
+                “{{ feedback.message }}”
+            </p>
+
+            <div class="flex items-center justify-center space-x-3">
+                <!-- <img [src]="feedback.image || 'assets/images/user-placeholder.png'" alt="{{ feedback.name }}"
+                    class="w-14 h-14 rounded-full object-cover border-2 border-blue-500" /> -->
+                <div class="text-left">
+                    <h4 class="text-lg font-semibold text-gray-800">{{ feedback.name }}</h4>
+                    <p class="text-sm text-gray-500">{{ feedback.role }}</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation Buttons -->
+        <button (click)="prevFeedback()"
+            class="absolute left-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 shadow-md transition">
+            ‹
+        </button>
+
+        <button (click)="nextFeedback()"
+            class="absolute right-2 top-1/2 transform -translate-y-1/2 bg-blue-600 text-white p-2 rounded-full hover:bg-blue-700 shadow-md transition">
+            ›
+        </button>
+
+        <!-- Dots Navigation -->
+        <div class="flex justify-center mt-6 space-x-2">
+            <button *ngFor="let fb of feedbacks; let idx = index" (click)="currentFeedbackIndex = idx"
+                class="w-3 h-3 rounded-full transition-all duration-300" [ngClass]="{
+          'bg-blue-600 w-5': idx === currentFeedbackIndex,
+          'bg-gray-300': idx !== currentFeedbackIndex
+        }">
+            </button>
+        </div>
     </div>
 </section>
+
 
 
 <footer class="bg-gray-900 text-gray-300 py-12 px-6 mt-16">

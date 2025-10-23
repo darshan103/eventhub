@@ -49,6 +49,38 @@ export class EventhubComponent {
     setTimeout(() => {
       console.log("my events are...", this.events);
     }, 5000);
+    this.startAutoSlide();
+  }
+
+  ngOnDestroy() {
+    if (this.intervalId) clearInterval(this.intervalId);
+  }
+
+  feedbacks = [
+    {
+      name: 'Pawan Kumar Ranjan',
+      role: 'Frontend Developer, India',
+      message: 'This platform transformed how I prepare for hackathons, coding contests.',
+      image: '../../assests/img01.jpeg'
+    }
+  ];
+
+  currentFeedbackIndex = 0;
+  intervalId: any;
+
+  startAutoSlide() {
+    this.intervalId = setInterval(() => {
+      this.nextFeedback();
+    }, 4000);
+  }
+
+  nextFeedback() {
+    this.currentFeedbackIndex = (this.currentFeedbackIndex + 1) % this.feedbacks.length;
+  }
+
+  prevFeedback() {
+    this.currentFeedbackIndex =
+      (this.currentFeedbackIndex - 1 + this.feedbacks.length) % this.feedbacks.length;
   }
 
   onImageError(event: any) {
