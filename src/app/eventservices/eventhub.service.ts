@@ -16,20 +16,20 @@ export class EventhubService {
    * Fetch a hackathons
    */
   getHackatons(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/hackathons`);
+    return this.http.get<any>(`${this.apiUrl}/event/hackathons`);
   }
 
   /**
    * Fetch a contests
    */
   getContests(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/contests`);
+    return this.http.get<any>(`${this.apiUrl}/event/contests`);
   }
 
   /**
    * Fetch a internships
    */
   getInternships(): Observable<any> {
-    return this.http.get<any>(`${this.apiUrl}/internships`);
+    return this.http.get<any>(`${this.apiUrl}/event/internships`);
   }
 }
