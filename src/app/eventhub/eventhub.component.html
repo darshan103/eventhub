@@ -12,8 +12,8 @@
     <!-- Event Card Carousel -->
     <div class="relative max-w-2xl mx-auto h-[350px]">
         <!-- Carousel Wrapper -->
-        <div *ngFor="let event of events; let i = index" [class.hidden]="i !== currentIndex"
-            class="transition-all duration-700 ease-in-out h-full w-full">
+        <div *ngFor="let event of events; let i = index" class="absolute inset-0 transition-opacity duration-700"
+            [ngClass]="{ 'opacity-100 z-10': i === currentIndex, 'opacity-0 z-0': i !== currentIndex }">
             <div (click)="goToEvent(event)"
                 class="bg-white rounded-xl shadow-lg overflow-hidden transform hover:scale-[1.01] transition duration-500 flex flex-col h-full">
                 <!-- Date + Event Section -->

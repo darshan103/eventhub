@@ -21,17 +21,14 @@ export class EventhubComponent {
   currentIndex = 0;
   currentYear = new Date().getFullYear();
 
-  constructor(private eventService: EventhubService, private router: Router) {
-    setInterval(() => {
-      this.currentIndex = (this.currentIndex + 1) % this.events.length;
-    }, 4000);
-  }
+  constructor(private eventService: EventhubService, private router: Router) {}
 
   ngOnInit(): void {
     this.eventService.getHackatons().subscribe(res => {
       this.backendHackathons = res.data;
       this.events = this.backendHackathons;
       console.log("my hackathons are...", this.backendHackathons);
+      this.startAutoSlide();
     });
 
     this.eventService.getContests().subscribe(res => {
@@ -43,17 +40,7 @@ export class EventhubComponent {
     this.eventService.getInternships().subscribe(res => {
       this.backendInternships = res.data;
       // this.events = this.backendInternships;
-      // console.log("my internships are...", this.backendInternships);
     });
-
-    setTimeout(() => {
-      console.log("my events are...", this.events);
-    }, 5000);
-    this.startAutoSlide();
-  }
-
-  ngOnDestroy() {
-    if (this.intervalId) clearInterval(this.intervalId);
   }
 
   feedbacks = [
@@ -69,8 +56,11 @@ export class EventhubComponent {
   intervalId: any;
 
   startAutoSlide() {
+    if (this.intervalId) clearInterval(this.intervalId);
+    if (!this.events || this.events.length <= 1) return;
+
     this.intervalId = setInterval(() => {
-      this.nextFeedback();
+      this.currentIndex = (this.currentIndex + 1) % this.events.length;
     }, 4000);
   }
 
