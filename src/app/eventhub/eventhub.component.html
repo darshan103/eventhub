@@ -63,13 +63,14 @@
         </div>
     
         <!-- Dots Navigation -->
-        <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2">
+        <div class="absolute bottom-3 left-1/2 transform -translate-x-1/2 flex space-x-2 z-20">
             <button *ngFor="let e of events; let idx = index" (click)="currentIndex = idx"
                 class="w-3 h-3 rounded-full transition-all duration-300" [ngClass]="{
-            'bg-blue-600 w-6': idx === currentIndex,
-            'bg-gray-300': idx !== currentIndex
-          }"></button>
+                'bg-blue-600 w-6': idx === currentIndex,
+                'bg-gray-300': idx !== currentIndex
+              }"></button>
         </div>
+
     </div>
 
 
