@@ -121,18 +121,21 @@ export class EventhubComponent {
 
       this.events = this.backendHackathons;
       console.log("my hackathons are...", this.backendHackathons);
+      this.startAutoSlide();
     });
 
     this.eventService.getContests().subscribe(res => {
       this.backendContests = res.data;
       this.events = this.backendContests;
       console.log("my contests are...", this.backendContests);
+      this.startAutoSlide();
     });
 
     this.eventService.getInternships().subscribe(res => {
       this.backendInternships = res.data;
       this.internshalaImg = '/images/internshalaImg.jpg';
       // this.events = this.backendInternships;
+      this.startAutoSlide();
     });
   }
 
