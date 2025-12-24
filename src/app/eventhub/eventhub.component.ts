@@ -17,6 +17,7 @@ export class EventhubComponent {
   backendHackathons: any[] = [];
   backendContests: any[] = [];
   backendInternships: any[] = [];
+  internshalaImg: any;
 
   currentIndex = 0;
   currentYear = new Date().getFullYear();
@@ -44,10 +45,7 @@ export class EventhubComponent {
     return dateString;
   }
 
-  convertHackathonDateToISO(dateString: string): {
-    startISO: string | null;
-    endISO: string | null;
-  } {
+  convertHackathonDateToISO(dateString: string): { startISO: string | null; endISO: string | null; } {
     if (!dateString) return { startISO: null, endISO: null };
 
     // If already ISO (coding contest)
@@ -133,6 +131,7 @@ export class EventhubComponent {
 
     this.eventService.getInternships().subscribe(res => {
       this.backendInternships = res.data;
+      this.internshalaImg = '/images/internshalaImg.jpg';
       // this.events = this.backendInternships;
     });
   }
