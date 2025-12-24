@@ -26,7 +26,7 @@ export class EventhubComponent {
   transformDate(dateString: string): string {
     if (!dateString) return 'Date not specified';
 
-    // ✅ CASE 1: ISO date (e.g. 2026-01-03T14:30:00.000Z)
+    // CASE 1: ISO date (e.g. 2026-01-03T14:30:00.000Z)
     if (!isNaN(Date.parse(dateString))) {
       const date = new Date(dateString);
       return date.toLocaleString('en-IN', {
@@ -40,27 +40,89 @@ export class EventhubComponent {
       });
     }
 
-    // ✅ CASE 2: Hackathon date range (e.g. "Oct 22 - Dec 31, 2025")
-    const rangeMatch = dateString.match(
-      /([A-Za-z]{3})\s(\d{1,2})\s-\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})/
-    );
-
-    if (rangeMatch) {
-      const [, sm, sd, em, ed, year] = rangeMatch;
-      return `${sd} ${sm} ${year} – ${ed} ${em} ${year}`;
-    }
-
-    // ✅ Fallback: show as-is
+    // Fallback: show as-is
     return dateString;
   }
 
+  convertHackathonDateToISO(dateString: string): {
+    startISO: string | null;
+    endISO: string | null;
+  } {
+    if (!dateString) return { startISO: null, endISO: null };
+
+    // If already ISO (coding contest)
+    const isoTest = new Date(dateString);
+    if (!isNaN(isoTest.getTime())) {
+      return {
+        startISO: isoTest.toISOString(),
+        endISO: null,
+      };
+    }
+
+    // Handle ranges like:
+    // "Dec 09, 2025 - Jan 22, 2026"
+    // "Oct 22 - Dec 31, 2025"
+    const parts = dateString.split('-').map(p => p.trim());
+    if (parts.length !== 2) {
+      return { startISO: null, endISO: null };
+    }
+
+    // Ensure year exists on both sides
+    const yearMatch = dateString.match(/\d{4}/g);
+    const years = yearMatch ? yearMatch.map(y => Number(y)) : [];
+
+    const startDateStr =
+      years.length === 1 ? `${parts[0]} ${years[0]}` : parts[0];
+    const endDateStr =
+      years.length === 1 ? `${parts[1]} ${years[0]}` : parts[1];
+
+    const startDate = new Date(startDateStr);
+    const endDate = new Date(endDateStr);
+
+    if (isNaN(startDate.getTime()) || isNaN(endDate.getTime())) {
+      return { startISO: null, endISO: null };
+    }
+
+    return {
+      startISO: startDate.toISOString(),
+      endISO: new Date(
+        endDate.setHours(23, 59, 59, 999)
+      ).toISOString(),
+    };
+  }
+
+  
 
   ngOnInit(): void {
     this.eventService.getHackatons().subscribe(res => {
-      this.backendHackathons = res.data;
+      this.backendHackathons = res.data.map((event:any) => {
+        const { startISO, endISO } =
+          this.convertHackathonDateToISO(event.raw_data.start_date);
+
+        let finalDate = 'Date not specified';
+
+        // Hackathon (range)
+        if (startISO && endISO) {
+          finalDate =
+            `${new Date(startISO).toLocaleDateString('en-IN', {
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+            })} – ${new Date(endISO).toLocaleDateString('en-IN', {
+              day: '2-digit',
+              month: 'short',
+              year: 'numeric',
+            })}`;
+        }
+
+        return {
+          ...event,
+          start_date: finalDate,
+        };
+      });
+
       this.events = this.backendHackathons;
       console.log("my hackathons are...", this.backendHackathons);
-      this.startAutoSlide();
     });
 
     this.eventService.getContests().subscribe(res => {
