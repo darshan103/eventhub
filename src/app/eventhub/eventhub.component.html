@@ -27,7 +27,7 @@
                                 d="M8 7V3m8 4V3m-9 8h10m-9 8h8a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
                         </svg>
                         <span>
-                            {{ event.start_date ? (event.start_date) : 'Date not specified' }}
+                            {{ event.start_date ? transformDate(event.start_date) : 'Date not specified' }}
                         </span>
                     </div>
                 

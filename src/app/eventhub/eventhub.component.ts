@@ -23,6 +23,38 @@ export class EventhubComponent {
 
   constructor(private eventService: EventhubService, private router: Router) {}
 
+  transformDate(dateString: string): string {
+    if (!dateString) return 'Date not specified';
+
+    // ✅ CASE 1: ISO date (e.g. 2026-01-03T14:30:00.000Z)
+    if (!isNaN(Date.parse(dateString))) {
+      const date = new Date(dateString);
+      return date.toLocaleString('en-IN', {
+        day: '2-digit',
+        month: 'short',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        hour12: true,
+        timeZone: 'Asia/Kolkata',
+      });
+    }
+
+    // ✅ CASE 2: Hackathon date range (e.g. "Oct 22 - Dec 31, 2025")
+    const rangeMatch = dateString.match(
+      /([A-Za-z]{3})\s(\d{1,2})\s-\s([A-Za-z]{3})\s(\d{1,2}),\s(\d{4})/
+    );
+
+    if (rangeMatch) {
+      const [, sm, sd, em, ed, year] = rangeMatch;
+      return `${sd} ${sm} ${year} – ${ed} ${em} ${year}`;
+    }
+
+    // ✅ Fallback: show as-is
+    return dateString;
+  }
+
+
   ngOnInit(): void {
     this.eventService.getHackatons().subscribe(res => {
       this.backendHackathons = res.data;
